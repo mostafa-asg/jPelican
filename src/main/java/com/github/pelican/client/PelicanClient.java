@@ -60,6 +60,27 @@ public class PelicanClient {
         return new String(answer).equals("OK.");
     }
 
+    public long incCounter(String key, int change) throws IOException {
+        String head = String.format("C %s %s %d\n", "Inc", key, change);
+        byte[] command = append( toBytes(head.length()), head.getBytes() );
+
+        socket.getOutputStream().write(command);
+
+        byte[] answer = new byte[8];
+        socket.getInputStream().read(answer);
+        return BytesUtil.toLong(answer);
+    }
+
+    public long decCounter(String key, int change) throws IOException {
+        String head = String.format("C %s %s %d\n", "Dec", key, change);
+        byte[] command = append( toBytes(head.length()), head.getBytes() );
+
+        socket.getOutputStream().write(command);
+
+        byte[] answer = new byte[8];
+        socket.getInputStream().read(answer);
+        return BytesUtil.toLong(answer);
+    }
 
     public byte[] get(String key) throws IOException {
         String getCommand = String.format("GET %s\n", key);

@@ -27,4 +27,8 @@ public class BytesUtil {
     public static int toInt(byte[] data) {
         return ByteBuffer.wrap(data).getInt();
     }
+
+    public static long toLong(byte[] data) {
+        return ByteBuffer.wrap(data).getLong();
+    }
 }
